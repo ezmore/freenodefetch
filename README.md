@@ -32,6 +32,17 @@
 值：目标网站，每行一个。例如：<br>
 
 https://shadowmere.xyz/<br>
-https://another-site.com/<br>
+https://another-site.com/<br><br>
 
-第三步：首次运行.github/workflows/update_sub.yml
+第三步：开启 GitHub Pages 服务<br>
+为了让生成的文件能够变成网络订阅链接，我们需要开启 GitHub Pages：<br>
+
+代码提交（Commit & Push）到 GitHub 后，点击 Actions 选项卡，手动触发一次工作流（点击 Daily Fetch Nodes -> Run workflow），让它跑完并生成 gh-pages 分支。<br>
+
+前往仓库的 Settings -> 左侧 Pages。<br>
+
+在 Build and deployment 下方的 Source 选择 Deploy from a branch。<br>
+
+Branch 选择 gh-pages，目录选择 / (root)，然后点击 Save。<br><br>
+
+第四步：首次运行.github/workflows/update_sub.yml<br>
