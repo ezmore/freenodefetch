@@ -5,7 +5,7 @@ on:
     - cron: '0 20 * * *'
   workflow_dispatch: 
 
-# 解决 2026 年 Node.js 20 废弃警告，强制 Actions 运行在 Node 24
+# 1. 解决 Node.js 20 废弃警告，强制 Actions 运行在 Node 24 环境中
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
@@ -25,10 +25,11 @@ jobs:
       with:
         python-version: '3.10'
 
+    # 2. 在这里增加安装 curl_cffi 依赖
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install requests
+        pip install requests curl_cffi
 
     - name: Run script
       env:
