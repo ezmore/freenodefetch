@@ -2,15 +2,16 @@ name: Daily Fetch Nodes
 
 on:
   schedule:
+    # 每天国际标准时间 (UTC) 20:00 运行一次，对应北京时间凌晨 4:00
     - cron: '0 20 * * *'
-  workflow_dispatch: 
+  workflow_dispatch: # 允许你在 GitHub 页面上手动点击运行
 
-# 1. 解决 Node.js 20 废弃警告，强制 Actions 运行在 Node 24 环境中
+# 强制 Actions 运行在 Node 24 环境中，解决 2026 年 Node.js 20 废弃警告
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 permissions:
-  contents: write 
+  contents: write # 赋予工作流向仓库提交/部署代码的权限
 
 jobs:
   fetch-and-deploy:
@@ -25,22 +26,22 @@ jobs:
       with:
         python-version: '3.10'
 
-    # 2. 在这里增加安装 curl_cffi 依赖
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
         pip install requests curl_cffi
 
     - name: Run script
+      # 这里使用 vars.XXX 来读取你在 GitHub 仓库 Settings -> Variables 中配置的明文变量
       env:
-        UUID: ${{ secrets.UUID }}
-        SOURCES: ${{ secrets.SOURCES }}
+        UUID: ${{ vars.UUID }}
+        SOURCES: ${{ vars.SOURCES }}
       run: |
         python fetch_nodes.py
 
     - name: Deploy to GitHub Pages Branch
       uses: peaceiris/actions-gh-pages@v4
       with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
+        github_token: ${{ secrets.GITHUB_TOKEN }} # 这里的内置 TOKEN 属于系统安全凭证，保持 secrets 不动
         publish_dir: ./output
         publish_branch: gh-pages
