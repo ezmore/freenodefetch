@@ -33,3 +33,5 @@
 
 https://shadowmere.xyz/<br>
 https://another-site.com/<br>
+
+第三步：首次运行.github/workflows/update_sub.yml
