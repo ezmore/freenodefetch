@@ -31,6 +31,5 @@
 
 值：目标网站，每行一个。例如：<br>
 
-Plaintext<br>
 https://shadowmere.xyz/<br>
 https://another-site.com/<br>
